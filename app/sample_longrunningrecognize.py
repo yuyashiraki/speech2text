@@ -2,14 +2,8 @@ import os, json, base64, time
 import urllib2
 abspath = os.path.dirname(os.path.abspath(__file__))
 
-def longrunningrecognize_request(token):
+def longrunningrecognize_request(token, file_name):
     endpoint = 'https://speech.googleapis.com/v1/speech:longrunningrecognize'
-    
-    # The name of the audio file to transcribe
-    file_name = os.path.join(
-        abspath + '/..',
-        'resources',
-        'hello.wav')
     
     # Loads the audio into memory
     with open(file_name, 'rb') as audio_file:
@@ -64,6 +58,12 @@ def longrunningrecognize_poll(token, name):
 with open(abspath + '/../.token', 'r') as token_file:
     token = token_file.readline().replace('\n', '')
 
-name = longrunningrecognize_request(token)
+# The name of the audio file to transcribe
+file_name = os.path.join(
+    abspath + '/..',
+    'resources',
+    'hello.wav')
+
+name = longrunningrecognize_request(token, file_name)
 while (longrunningrecognize_poll(token, name)):
     time.sleep(5)
