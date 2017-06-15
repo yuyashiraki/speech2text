@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>speech2txt</title>
+ 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <h2>speech2txt</h2>
+      </div>
+      
+      <div class="row">
+        <ul class="nav nav-tabs">
+          <li class={{"active" if shortrecog}}><a data-toggle="tab" href="#shortrecog">Short Recognize</a></li>
+          <li class={{"active" if longrecog}}><a data-toggle="tab" href="#longrecog">Long Recognize</a></li>
+          <li class={{"active" if getresult}}><a data-toggle="tab" href="#getresult">Get Result</a></li>
+        </ul>
+      
+        <div class="tab-content">
+          <div id="shortrecog" class="tab-pane fade {{'in active' if shortrecog}}">
+            <h3>Short Recognize</h3>
+            <form action="/shortrecog" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="token">Token</label>
+                <input class="form-control" type="text" id="token" name="token" placeholder="enter google cloud token" value="{{ token if token }}">
+              </div>
+              <div class="form-group">
+				<select class="custom-select" name="lang">
+				  <option selected>Language</option>
+				  <option value="en-US">English(US)</option>
+				  <option value="en-GB">English(UK)</option>
+				  <option value="ja-JP">日本語</option>
+				  <option value="zh-CN">中国語(簡体字)</option>
+				</select>
+              </div>
+              <div class="form-group">
+                <label for="file">File input</label>
+                <input type="file" class="form-control-file" id="file" name="file">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+          <div id="longrecog" class="tab-pane fade {{'in active' if longrecog}}">
+            <h3>Long Recognize</h3>
+            <form action="/longrecog" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="token">Token</label>
+                <input class="form-control" type="text" id="token" name="token" placeholder="enter google cloud token" value="{{ token if token }}">
+              </div>
+              <div class="form-group">
+				<select class="custom-select" name="lang">
+				  <option selected>Language</option>
+				  <option value="en-US" {{"selected" if lang == "en-US"}}>English(US)</option>
+				  <option value="en-GB" {{"selected" if lang == "en-GB"}}>English(UK)</option>
+				  <option value="ja-JP" {{"selected" if lang == "ja-JP"}}>日本語</option>
+				  <option value="zh-CN" {{"selected" if lang == "zh-CN"}}>中国語(簡体字)</option>
+				</select>
+              </div>
+              <div class="form-group">
+                <label for="file">File input</label>
+                <input type="file" class="form-control-file" id="file" name="file">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+          <div id="getresult" class="tab-pane fade {{'in active' if getresult}}">
+            <h3>Get Result</h3>
+            <form action="/getresult" method="post">
+              <div class="form-group">
+                <label for="token">Token</label>
+                <input class="form-control" type="text" id="token" name="token" placeholder="enter google cloud token" value="{{ token if token }}">
+              </div>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" id="name" name="name" placeholder="enter request name" value="{{ name if name }}">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <br><br>
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-heading">result</div>
+          <div class="panel-body">
+            {% for result in results %}
+                {{ result }}
+                <br>
+            {% endfor%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
