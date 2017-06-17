@@ -1,3 +1,4 @@
 TOKEN
 .DS_Store
 *.pyc
+mnt/*

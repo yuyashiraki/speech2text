@@ -6,7 +6,7 @@ ADD app /app
 RUN pip install -r /app/requirements.txt
 ADD etc /etc
 ADD scripts /var/scripts
-ADD resources /resources
+ADD mnt /mnt
 RUN chmod 755 /var/scripts/*.sh
 EXPOSE 80
 CMD ["/var/scripts/entrypoint.sh"]
